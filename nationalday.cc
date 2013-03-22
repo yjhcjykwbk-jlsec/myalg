@@ -1,3 +1,5 @@
+//hangzhou 2010 H National Day Parade
+//readlly easy, just enumerate i=1->M-N+1 where the square begins
 #include <vector>
 #include <stdio.h>
 #include <iostream>
