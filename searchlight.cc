@@ -37,7 +37,7 @@ int getmin(){
 				if(it==Row[i].end()) break;
 				if(divtwo) min=max(min,(it->first-begin+2)/2);
 				else min=max(min,it->first-begin+1);
-				divtwo=true; begin=it->first;lastindex=it;//有一个灯在亮着
+				divtwo=true; begin=it->first;lastindex=it;//
 			}
 			if(lastindex==Row[i].end()) return -1;
 			min=max(min,M-lastindex->first);
