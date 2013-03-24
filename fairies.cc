@@ -66,11 +66,13 @@ struct num_2{
 	}
 	num_2 substr(int l,int r){
 		num_2 tmp;
+		if(l>=r) return tmp;
 		for(int i=l;i<r;i++) tmp.a[i-l]=a[i];
 		tmp.len=r-l;
 		return tmp;
 	}
-	num_2 Cha(num_2 & b){
+	num_2 operator -(const num_2 & _b){
+		num_2 b(_b);
 		num_2 tmp; reverse(); 
 		b.reverse();
 		int c=0;
@@ -92,12 +94,11 @@ struct num_2{
 			cout<<*this<<endl<<b<<endl<<tmp<<endl;
 			assert(c!=-1);
 		}
-		//		assert(c!=-1);
 		return tmp;
 	}
 	friend	num_2 getCha( num_2 &a, num_2 &b){
-		if(a<b) return b.Cha(a);
-		return a.Cha(b);
+		if(a<b) return b-a;
+		return a-b;
 	}
 	friend ostream& operator<<(ostream &os,const num_2& s){
 		rep(i,0,s.len) os<<s.a[i];
@@ -216,7 +217,7 @@ int getLast1(int start){
 	if(pos==n_2.len) return 1; //-1
 	for(;pos<n_2.len;pos++){
 		if(n_2.a[pos]==0){
-		//	if(onecnt<=0) return getLast(pos+1)+2*onecnt+2; //-1 (*2 +1)(cnt) *2
+			//	if(onecnt<=0) return getLast(pos+1)+2*onecnt+2; //-1 (*2 +1)(cnt) *2
 			return getLast(pos+1)+onecnt+2;   //*2(cnt) -1 *2
 		}
 		else onecnt++;
@@ -226,33 +227,44 @@ int getLast1(int start){
 num_10 f(){
 	if(n_2<m_2) return getCha(m_2,n_2);
 	num_10 temp;
-	// 斜匹配到mlen-1
-	int pos=m_2.len-1;
-	num_2 tmp=n_2.substr(0,m_2.len-1)+1;
-	num_2 step2=m_2.Cha(tmp);//
-	cout<<"match to "<<tmp<<", needs "<<step2<<"="<<(temp=step2)<<" steps"<<endl;
-	step2+=getLast1(pos);
-	cout<<"match to n needs "<<getLast1(pos)<<" steps"<<endl;
-
 	//匹配到mlen
-	pos=m_2.len;
-	tmp=n_2.substr(0,m_2.len);
+	int pos=m_2.len;
+	num_2 tmp=n_2.substr(0,m_2.len);
 	num_2 step1;
 	if(m_2<=tmp) {
-		step1=tmp.Cha(m_2);
-		cout<<"match to "<<tmp<<", needs "<<step1<<"="<<(temp=step1)<<" steps"<<endl;
+		step1=tmp-m_2;
+		cout<<"1 # match to "<<tmp<<", needs "<<step1<<"="<<(temp=step1)<<" steps"<<endl;
 		step1+=getLast(pos);
-		cout<<"match to n needs "<<getLast(pos)<<" steps"<<endl;
+		cout<<"then needs "<<getLast(pos)<<" steps"<<endl;
 	}
 	else {
 		tmp=tmp+1;
-		step1=m_2.Cha(tmp);
-		cout<<"match to "<<tmp<<", needs "<<step1<<"="<<(temp=step1)<<" steps"<<endl;
+		step1=m_2-tmp;
+		cout<<"1 # match to "<<tmp-1<<", needs "<<step1<<"="<<(temp=step1)<<" steps"<<endl;
 		step1+=getLast1(pos);
-		cout<<"match to n needs "<<getLast1(pos)<<" steps"<<endl;
+		cout<<"then needs "<<getLast1(pos)<<" steps"<<endl;
 	}
-	if(step2<step1) return step2;
-	else return step1;
+
+	// 匹配到mlen-1
+	pos=m_2.len-1;
+	tmp=n_2.substr(0,m_2.len-1)+1;
+	num_2 step2=m_2-tmp;//
+	cout<<"2 # match to "<<tmp-1<<", needs "<<step2<<"="<<(temp=step2)<<" steps"<<endl;
+	step2+=getLast1(pos);
+	cout<<"then needs "<<getLast1(pos)<<" steps"<<endl;
+
+	// 匹配到mlen+1
+	if(n_2.len>m_2.len){
+		pos=m_2.len+1;
+		tmp=n_2.substr(0,m_2.len+1);
+		num_2 step3=tmp-m_2;
+		cout<<"3 # match to "<<tmp<<", needs "<<step3<<"="<<(temp=step3)<<" steps"<<endl;
+		step3+=getLast(pos);
+		cout<<"then needs "<<getLast(pos)<<" steps"<<endl;
+		if(step3<step1&&step3<step2) { cout<<"#3"<<endl;return step3;}
+	}
+	if(step1<step2){ cout<<"#1"<<endl;return step1;}
+	else{ cout<<"#2"<<endl;return step2;}
 }
 int main(){
 	char m_str[MAXN],n_str[MAXN];

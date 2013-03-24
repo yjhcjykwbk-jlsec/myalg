@@ -1,0 +1,50 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Cha	fairies.cc	/^	num_2 Cha(num_2 & b){$/;"	f	struct:num_2
+MAXN	fairies.cc	11;"	d	file:
+a	fairies.cc	/^	int a[MAXN];$/;"	m	struct:num_10	file:
+a	fairies.cc	/^	int a[MAXN];$/;"	m	struct:num_2	file:
+add1	fairies.cc	/^	void add1(){$/;"	f	struct:num_10
+adjust	fairies.cc	/^	void adjust(){$/;"	f	struct:num_10
+adjust	fairies.cc	/^	}void adjust(){$/;"	f	struct:num_2
+div2	fairies.cc	/^	int div2(){$/;"	f	struct:num_10
+f	fairies.cc	/^num_10 f(){$/;"	f
+getCha	fairies.cc	/^	friend	num_2 getCha( num_2 &a, num_2 &b){$/;"	f	struct:num_2
+getLast	fairies.cc	/^int getLast(int start){$/;"	f
+getLast1	fairies.cc	/^int getLast1(int start){$/;"	f
+isZero	fairies.cc	/^	bool isZero(){return len==0||a[0]==0;}$/;"	f	struct:num_10
+len	fairies.cc	/^	int len;$/;"	m	struct:num_10	file:
+len	fairies.cc	/^	int len;$/;"	m	struct:num_2	file:
+m_10	fairies.cc	/^}m_10,n_10;$/;"	v	typeref:struct:num_10
+m_2	fairies.cc	/^}m_2,n_2;$/;"	v	typeref:struct:num_2
+main	fairies.cc	/^int main(){$/;"	f
+mul2	fairies.cc	/^	void mul2(){$/;"	f	struct:num_10
+n_10	fairies.cc	/^}m_10,n_10;$/;"	v	typeref:struct:num_10
+n_2	fairies.cc	/^}m_2,n_2;$/;"	v	typeref:struct:num_2
+num_10	fairies.cc	/^	num_10(){\/\/从十进制字符串转$/;"	f	struct:num_10
+num_10	fairies.cc	/^	num_10(char *s){\/\/从十进制字符串转$/;"	f	struct:num_10
+num_10	fairies.cc	/^	num_10(const num_2 &b){\/\/从2进制转10进制$/;"	f	struct:num_10
+num_10	fairies.cc	/^struct num_10{$/;"	s	file:
+num_2	fairies.cc	/^	num_2(){$/;"	f	struct:num_2
+num_2	fairies.cc	/^	num_2(int n){$/;"	f	struct:num_2
+num_2	fairies.cc	/^num_2::num_2(const num_10 &s)$/;"	f	class:num_2
+num_2	fairies.cc	/^struct num_2{$/;"	s	file:
+operator +	fairies.cc	/^	num_2 operator + (int b){$/;"	f	struct:num_2
+operator +=	fairies.cc	/^	void operator += (int b){$/;"	f	struct:num_2
+operator <	fairies.cc	/^	bool operator < (const num_2 &b){$/;"	f	struct:num_2
+operator <<	fairies.cc	/^	friend ostream& operator<<(ostream &os,const num_10& s){$/;"	f	struct:num_10
+operator <<	fairies.cc	/^	friend ostream& operator<<(ostream &os,const num_2& s){$/;"	f	struct:num_2
+operator <=	fairies.cc	/^	bool operator <= (const num_2 &b){$/;"	f	struct:num_2
+rep	fairies.cc	6;"	d	file:
+rep0	fairies.cc	5;"	d	file:
+reverse	fairies.cc	/^	void reverse(){$/;"	f	struct:num_10
+reverse	fairies.cc	/^	void reverse(){$/;"	f	struct:num_2
+simplify	fairies.cc	/^	void simplify(){\/\/去掉开头的0$/;"	f	struct:num_10
+simplify	fairies.cc	/^	void simplify(){\/\/去掉开头的0$/;"	f	struct:num_2
+substr	fairies.cc	/^	num_2 substr(int l,int r){$/;"	f	struct:num_2
+tep	fairies.cc	8;"	d	file:
+tep0	fairies.cc	7;"	d	file:
