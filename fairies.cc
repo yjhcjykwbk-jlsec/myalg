@@ -1,191 +1,281 @@
-
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <deque>
-#include <queue>
-#include <stack>
-#include <bitset>
-#include <algorithm>
-#include <functional>
-#include <numeric>
-#include <utility>
-#include <sstream>
 #include <iostream>
-#include <iomanip>
-#include <cstdio>
-#include <cmath>
-#include <cstdlib>
-#include <cctype>
-#include <string>
-#include <cstring>
-#include <cstdio>
-#include <cmath>
-#include <cstdlib>
-#include <ctime>
+#include <map>
 
 using namespace std;
 #define rep0(i,n) for(int i=0;i<n;i++)  //[0,n)
 #define rep(i,m,n) for(int i=m;i<n;i++) //[m,n)
 #define tep0(i,m) for(int i=m;i>0;i--)  //[m.0)
 #define tep(i,m,n) for(int i=m;i>n;i--) //[m.n)
-//BEGINTEMPLATE_BY_ACRUSH_TOPCODER
-#define SIZE(X) ((int)(X.size()))//NOTES:SIZE(
-#define LENGTH(X) ((int)(X.length()))//NOTES:LENGTH(
-#define MP(X,Y) make_pair(X,Y)//NOTES:MP(
-typedef long long int64;//NOTES:int64
-typedef unsigned long long uint64;//NOTES:uint64
-#define two(X) (1<<(X))//NOTES:two(
-#define twoL(X) (((int64)(1))<<(X))//NOTES:twoL(
-#define contain(S,X) (((S)&two(X))!=0)//NOTES:contain(
-#define containL(S,X) (((S)&twoL(X))!=0)//NOTES:containL(
-const double pi=acos(-1.0);//NOTES:pi
-const double eps=1e-11;//NOTES:eps
-template<class T> inline void checkmin(T &a,T b){if(b<a) a=b;}//NOTES:checkmin(
-template<class T> inline void checkmax(T &a,T b){if(b>a) a=b;}//NOTES:checkmax(
-template<class T> inline T sqr(T x){return x*x;}//NOTES:sqr
-typedef pair<int,int> ipair;//NOTES:ipair
-template<class T> inline T lowbit(T n){return (n^(n-1))&n;}//NOTES:lowbit(
-template<class T> inline int countbit(T n){return (n==0)?0:(1+countbit(n&(n-1)));}//NOTES:countbit(
-//Numberic Functions
-template<class T> inline T gcd(T a,T b)//NOTES:gcd(
-{if(a<0)return gcd(-a,b);if(b<0)return gcd(a,-b);return (b==0)?a:gcd(b,a%b);}
-template<class T> inline T lcm(T a,T b)//NOTES:lcm(
-{if(a<0)return lcm(-a,b);if(b<0)return lcm(a,-b);return a*(b/gcd(a,b));}
-template<class T> inline T euclide(T a,T b,T &x,T &y)//NOTES:euclide(
-{if(a<0){T d=euclide(-a,b,x,y);x=-x;return d;}
-	if(b<0){T d=euclide(a,-b,x,y);y=-y;return d;}
-	if(b==0){x=1;y=0;return a;}else{T d=euclide(b,a%b,x,y);T t=x;x=y;y=t-(a/b)*y;return d;}}
-template<class T> inline vector<pair<T,int> > factorize(T n)//NOTES:factorize(
-{vector<pair<T,int> > R;for (T i=2;n>1;){if (n%i==0){int C=0;for (;n%i==0;C++,n/=i);R.push_back(make_pair(i,C));}
-	i++;if (i>n/i) i=n;}if (n>1) R.push_back(make_pair(n,1));return R;}
-template<class T> inline bool isPrimeNumber(T n)//NOTES:isPrimeNumber(
-{if(n<=1)return false;for (T i=2;i*i<=n;i++) if (n%i==0) return false;return true;}
-template<class T> inline T eularFunction(T n)//NOTES:eularFunction(
-{vector<pair<T,int> > R=factorize(n);T r=n;for (int i=0;i<R.size();i++)r=r/R[i].first*(R[i].first-1);return r;}
-//Matrix Operations
-const int MaxMatrixSize=40;//NOTES:MaxMatrixSize
-template<class T> inline void showMatrix(int n,T A[MaxMatrixSize][MaxMatrixSize])//NOTES:showMatrix(
-{for (int i=0;i<n;i++){for (int j=0;j<n;j++)cout<<A[i][j];cout<<endl;}}
-template<class T> inline T checkMod(T n,T m) {return (n%m+m)%m;}//NOTES:checkMod(
-template<class T> inline void identityMatrix(int n,T A[MaxMatrixSize][MaxMatrixSize])//NOTES:identityMatrix(
-{for (int i=0;i<n;i++) for (int j=0;j<n;j++) A[i][j]=(i==j)?1:0;}
-template<class T> inline void addMatrix(int n,T C[MaxMatrixSize][MaxMatrixSize],T A[MaxMatrixSize][MaxMatrixSize],T B[MaxMatrixSize][MaxMatrixSize])//NOTES:addMatrix(
-{for (int i=0;i<n;i++) for (int j=0;j<n;j++) C[i][j]=A[i][j]+B[i][j];}
-template<class T> inline void subMatrix(int n,T C[MaxMatrixSize][MaxMatrixSize],T A[MaxMatrixSize][MaxMatrixSize],T B[MaxMatrixSize][MaxMatrixSize])//NOTES:subMatrix(
-{for (int i=0;i<n;i++) for (int j=0;j<n;j++) C[i][j]=A[i][j]-B[i][j];}
-template<class T> inline void mulMatrix(int n,T C[MaxMatrixSize][MaxMatrixSize],T _A[MaxMatrixSize][MaxMatrixSize],T _B[MaxMatrixSize][MaxMatrixSize])//NOTES:mulMatrix(
-{ T A[MaxMatrixSize][MaxMatrixSize],B[MaxMatrixSize][MaxMatrixSize];
-	for (int i=0;i<n;i++) for (int j=0;j<n;j++) A[i][j]=_A[i][j],B[i][j]=_B[i][j],C[i][j]=0;
-	for (int i=0;i<n;i++) for (int j=0;j<n;j++) for (int k=0;k<n;k++) C[i][j]+=A[i][k]*B[k][j];}
-template<class T> inline void addModMatrix(int n,T m,T C[MaxMatrixSize][MaxMatrixSize],T A[MaxMatrixSize][MaxMatrixSize],T B[MaxMatrixSize][MaxMatrixSize])//NOTES:addModMatrix(
-{for (int i=0;i<n;i++) for (int j=0;j<n;j++) C[i][j]=checkMod(A[i][j]+B[i][j],m);}
-template<class T> inline void subModMatrix(int n,T m,T C[MaxMatrixSize][MaxMatrixSize],T A[MaxMatrixSize][MaxMatrixSize],T B[MaxMatrixSize][MaxMatrixSize])//NOTES:subModMatrix(
-{for (int i=0;i<n;i++) for (int j=0;j<n;j++) C[i][j]=checkMod(A[i][j]-B[i][j],m);}
-template<class T> inline T multiplyMod(T a,T b,T m) {return (T)((((int64)(a)*(int64)(b)%(int64)(m))+(int64)(m))%(int64)(m));}//NOTES:multiplyMod(
-template<class T> inline void mulModMatrix(int n,T m,T C[MaxMatrixSize][MaxMatrixSize],T _A[MaxMatrixSize][MaxMatrixSize],T _B[MaxMatrixSize][MaxMatrixSize])//NOTES:mulModMatrix(
-{ T A[MaxMatrixSize][MaxMatrixSize],B[MaxMatrixSize][MaxMatrixSize];
-	for (int i=0;i<n;i++) for (int j=0;j<n;j++) A[i][j]=_A[i][j],B[i][j]=_B[i][j],C[i][j]=0;
-	for (int i=0;i<n;i++) for (int j=0;j<n;j++) for (int k=0;k<n;k++) C[i][j]=(C[i][j]+multiplyMod(A[i][k],B[k][j],m))%m;}
-template<class T> inline T powerMod(T p,int e,T m)//NOTES:powerMod(
-{if(e==0)return 1%m;else if(e%2==0){T t=powerMod(p,e/2,m);return multiplyMod(t,t,m);}else return multiplyMod(powerMod(p,e-1,m),p,m);}
-//Point&Line
-double dist(double x1,double y1,double x2,double y2){return sqrt(sqr(x1-x2)+sqr(y1-y2));}//NOTES:dist(
-double distR(double x1,double y1,double x2,double y2){return sqr(x1-x2)+sqr(y1-y2);}//NOTES:distR(
-template<class T> T cross(T x0,T y0,T x1,T y1,T x2,T y2){return (x1-x0)*(y2-y0)-(x2-x0)*(y1-y0);}//NOTES:cross(
-int crossOper(double x0,double y0,double x1,double y1,double x2,double y2)//NOTES:crossOper(
-{double t=(x1-x0)*(y2-y0)-(x2-x0)*(y1-y0);if (fabs(t)<=eps) return 0;return (t<0)?-1:1;}
-bool isIntersect(double x1,double y1,double x2,double y2,double x3,double y3,double x4,double y4)//NOTES:isIntersect(
-{return crossOper(x1,y1,x2,y2,x3,y3)*crossOper(x1,y1,x2,y2,x4,y4)<0 && crossOper(x3,y3,x4,y4,x1,y1)*crossOper(x3,y3,x4,y4,x2,y2)<0;}
-bool isMiddle(double s,double m,double t){return fabs(s-m)<=eps || fabs(t-m)<=eps || (s<m)!=(t<m);}//NOTES:isMiddle(
-//Translator
-bool isUpperCase(char c){return c>='A' && c<='Z';}//NOTES:isUpperCase(
-bool isLowerCase(char c){return c>='a' && c<='z';}//NOTES:isLowerCase(
-bool isLetter(char c){return c>='A' && c<='Z' || c>='a' && c<='z';}//NOTES:isLetter(
-bool isDigit(char c){return c>='0' && c<='9';}//NOTES:isDigit(
-char toLowerCase(char c){return (isUpperCase(c))?(c+32):c;}//NOTES:toLowerCase(
-char toUpperCase(char c){return (isLowerCase(c))?(c-32):c;}//NOTES:toUpperCase(
-template<class T> string toString(T n){ostringstream ost;ost<<n;ost.flush();return ost.str();}//NOTES:toString(
-int toInt(string s){int r=0;istringstream sin(s);sin>>r;return r;}//NOTES:toInt(
-int64 toInt64(string s){int64 r=0;istringstream sin(s);sin>>r;return r;}//NOTES:toInt64(
-double toDouble(string s){double r=0;istringstream sin(s);sin>>r;return r;}//NOTES:toDouble(
-template<class T> void stoa(string s,int &n,T A[]){n=0;istringstream sin(s);for(T v;sin>>v;A[n++]=v);}//NOTES:stoa(
-template<class T> void atos(int n,T A[],string &s){ostringstream sout;for(int i=0;i<n;i++){if(i>0)sout<<' ';sout<<A[i];}s=sout.str();}//NOTES:atos(
-template<class T> void atov(int n,T A[],vector<T> &vi){vi.clear();for (int i=0;i<n;i++) vi.push_back(A[i]);}//NOTES:atov(
-template<class T> void vtoa(vector<T> vi,int &n,T A[]){n=vi.size();for (int i=0;i<n;i++)A[i]=vi[i];}//NOTES:vtoa(
-template<class T> void stov(string s,vector<T> &vi){vi.clear();istringstream sin(s);for(T v;sin>>v;vi.push_bakc(v));}//NOTES:stov(
-template<class T> void vtos(vector<T> vi,string &s){ostringstream sout;for (int i=0;i<vi.size();i++){if(i>0)sout<<' ';sout<<vi[i];}s=sout.str();}//NOTES:vtos(
-//Fraction
-template<class T> struct Fraction{T a,b;Fraction(T a=0,T b=1);string toString();};//NOTES:Fraction
-template<class T> Fraction<T>::Fraction(T a,T b){T d=gcd(a,b);a/=d;b/=d;if (b<0) a=-a,b=-b;this->a=a;this->b=b;}
-template<class T> string Fraction<T>::toString(){ostringstream sout;sout<<a<<"/"<<b;return sout.str();}
-template<class T> Fraction<T> operator+(Fraction<T> p,Fraction<T> q){return Fraction<T>(p.a*q.b+q.a*p.b,p.b*q.b);}
-template<class T> Fraction<T> operator-(Fraction<T> p,Fraction<T> q){return Fraction<T>(p.a*q.b-q.a*p.b,p.b*q.b);}
-template<class T> Fraction<T> operator*(Fraction<T> p,Fraction<T> q){return Fraction<T>(p.a*q.a,p.b*q.b);}
-template<class T> Fraction<T> operator/(Fraction<T> p,Fraction<T> q){return Fraction<T>(p.a*q.b,p.b*q.a);}
 //ENDTEMPLATE_BY_ACRUSH_TOPCODER
-int M,N;
-int maxn=1000;
+struct num_10;
+#define MAXN 3000
 struct num_2{
-	int a[maxn];
-	int l;
-	int val;
-	void init(int n){
-		if(val==n) break;
-		val=n;
-		rep(i,1,maxn){
-			if(n==0) {l=i;break;}
+	int a[MAXN];
+	int len;
+	num_2(const num_10 &s);
+	num_2(){
+		a[0]=0;len=1;
+	}
+	num_2(int n){
+		a[0]=n; len=1; adjust(); reverse();
+	}
+	void reverse(){
+		//颠倒
+		rep(i,0,len/2) {
+			int tmp=a[len-i-1];
+			a[len-i-1]=a[i];a[i]=tmp;
+		}
+	}void adjust(){
+		int n=0,i;//从0到高位调整
+		for(i=0;i<len||n>0;i++){
+			if(i<len) n+=a[i];
 			a[i]=n%2;
 			n/=2;
 		}
-		rep(i,1,l/2+1) {
-			int tmp=a[l-i+1];
-			a[l-i+1]=a[i];a[i]=tmp;
-		}
-	}void print(){
-		rep(i,1,l) cout<<a[i];
-		if(val==0) cout<<0;
-		cout<<endl;
+		len=i;
 	}
+	void simplify(){//去掉开头的0
+		int i;for(i=0;i<len;i++) if(a[i]!=0) break;
+		if(i>=len) len=1;//0
+		if(i>0&&i<len) {
+			for(int j=i;j<len;j++) a[j-i]=a[j];
+			len=len-i;
+		}
+	}
+	bool operator < (const num_2 &b){
+		if(len!=b.len) return len<b.len;
+		for(int i=0;i<len;i++){
+			if(a[i]!=b.a[i]) return a[i]<b.a[i];
+		}
+		return false;
+	}
+	bool operator <= (const num_2 &b){
+		if(len!=b.len) return len<b.len;
+		for(int i=0;i<len;i++){
+			if(a[i]!=b.a[i]) return a[i]<b.a[i];
+		}
+		return true;
+	}
+	void operator += (int b){
+		reverse();a[0]+=b;adjust();reverse();	
+	}
+	num_2 operator + (int b){
+		num_2 tmp(*this);
+		tmp.reverse();tmp.a[0]+=b;tmp.adjust();tmp.reverse();
+		return tmp;
+	}
+	num_2 substr(int l,int r){
+		num_2 tmp;
+		for(int i=l;i<r;i++) tmp.a[i-l]=a[i];
+		tmp.len=r-l;
+		return tmp;
+	}
+	num_2 Cha(num_2 & b){
+		num_2 tmp; reverse(); 
+		b.reverse();
+		int c=0;
+		for(int i=0;i<len&&i<b.len;i++){
+			tmp.a[i]=(a[i]+c-b.a[i]+2)%2;
+			if(a[i]+c<b.a[i])  c=-1;
+			else c=0;
+		}
+		for(int i=b.len;i<len;i++) {
+			tmp.a[i]=(a[i]+c+2)%2;
+			if(a[i]+c<0) c=-1;
+			else c=0;
+		}
+		reverse();b.reverse();
+		tmp.len=len;
+		tmp.reverse();
+		tmp.simplify();
+		if(c==-1){
+			cout<<*this<<endl<<b<<endl<<tmp<<endl;
+			assert(c!=-1);
+		}
+		//		assert(c!=-1);
+		return tmp;
+	}
+	friend	num_2 getCha( num_2 &a, num_2 &b){
+		if(a<b) return b.Cha(a);
+		return a.Cha(b);
+	}
+	friend ostream& operator<<(ostream &os,const num_2& s){
+		rep(i,0,s.len) os<<s.a[i];
+		return os;
+	}
+	//如果a是b的某个前缀，或者a是b的某个前缀+1，返回
 }m_2,n_2;
-int Qianzhui(int m,int n)//获得N与M匹配的前半部分
-{
-	m_2.init(m);n_2.init(n);
-	int t=0;
-	rep(i,1,maxn){
-		t*=2;
-		if(m_2.a[i]==n_2.a[i]) 
-			t+=m_2.a[i];
-	}
-	return t;
-}
-//pure searching alg
-int f(int M,int N){
-	if(M>=N) return M-N;
-	int cnt=0;
-	int remain=0;
-	while(M<N){
-		int t=Qianzhui(M,N);//qianzhui如果N能少一位也可以
-		if(M==t) 
-			cnt++;
-		else
-		{
-			cnt+=abs(M-t)-1,M=M>t?t+1:t-1;
-			t=Qianzhui(M*2,N);
-			if(abs(M*2-t)>1) {cnt+=1;M=t;}
-		}
-		if(M<N) M*=2,cnt++;
-		else {
-			cnt+=abs(M-N);
-			break;
+struct num_10{
+	int a[MAXN];
+	int len;
+	void reverse(){
+		//颠倒
+		rep(i,0,len/2) {
+			int tmp=a[len-i-1];
+			a[len-i-1]=a[i];a[i]=tmp;
 		}
 	}
-}
+	num_10(){//从十进制字符串转
+		len=1;a[0]=0;
+	}
+	num_10(char *s){//从十进制字符串转
+		int slen=strlen(s);
+		rep(i,0,slen)
+			a[i]=s[slen-i-1]-'0';
+		len=slen;
+		reverse();
+	}
+	num_10(const num_2 &b){//从2进制转10进制
+		len=1;a[0]=0;
+		for(int i=0;i<b.len;i++){
+			if(b.a[i]==1) add1();
+			if(i<b.len-1) mul2();
+		}
+	}
+	bool isZero(){return len==0||a[0]==0;}
+	void simplify(){//去掉开头的0
+		int i;for(i=0;i<len;i++) if(a[i]!=0) break;
+		if(i>=len) len=1;//0
+		if(i>0&&i<len) {
+			for(int j=i;j<len;j++) a[j-i]=a[j];
+			len=len-i;
+		}
+	}
+	int div2(){
+		int c=0;
+		for(int i=0;i<len;i++){
+			a[i]+=c*10;
+			c=(a[i]%2);a[i]/=2;
+		}
+		simplify();
+		return c;
+	}
+	void adjust(){
+		int i,c=0;for(i=0;i<len||c>0;i++){
+			if(i<len) c+=a[i];
+			a[i]=c%10,c/=10;
+		}
+		len=i;
+	}
+	void mul2(){
+		int c=0;
+		reverse();
+		for(int i=0;i<len;i++){
+			a[i]*=2;
+		}
+		adjust();
+		reverse();
+	}
+	void add1(){
+		int c=1, i;
+		for(i=len-1;i>=0;i--){
+			c+=a[i];
+			a[i]=c%10;c/=10;
+			if(c==0) break;
+		}
+		if(i<0){
+			len++;a[0]=1;a[len-1]=0;
+		}
+	}
+	friend ostream& operator<<(ostream &os,const num_10& s){
+		rep(i,0,s.len) os<<s.a[i];
+		return os;
+	}
+}m_10,n_10;
 
+num_2::num_2(const num_10 &s)
+{//从十进制转
+	num_10 tmp=s;
+	int c=0;
+	rep(i,0,MAXN){
+		c=tmp.div2();	
+		a[i]=c;
+		if(tmp.isZero()) {len=i+1;break;}
+	}
+	reverse();
+}
+int getLast(int start){
+	int step=0;
+	int onecnt=0;
+	for(int pos=start;pos<n_2.len;pos++){
+		if(n_2.a[pos]==0){
+			step+=1;
+			if(onecnt>2) step+=1+onecnt+1;//+1 *2(cnt) -1 
+			else step+=onecnt*2;//*2  +1
+			onecnt=0;
+		}
+		else onecnt++;
+	}
+	if(onecnt>2) step+=1+onecnt+1;//+1 *2(cnt) -1
+	else step+=onecnt*2;//*2 +1
+	return step;
+}
+int getLast1(int start){
+	int pos=start;
+	int onecnt=0;
+	if(pos==n_2.len) return 1; //-1
+	for(;pos<n_2.len;pos++){
+		if(n_2.a[pos]==0){
+		//	if(onecnt<=0) return getLast(pos+1)+2*onecnt+2; //-1 (*2 +1)(cnt) *2
+			return getLast(pos+1)+onecnt+2;   //*2(cnt) -1 *2
+		}
+		else onecnt++;
+	}
+	return onecnt+1;
+}
+num_10 f(){
+	if(n_2<m_2) return getCha(m_2,n_2);
+	num_10 temp;
+	// 斜匹配到mlen-1
+	int pos=m_2.len-1;
+	num_2 tmp=n_2.substr(0,m_2.len-1)+1;
+	num_2 step2=m_2.Cha(tmp);//
+	cout<<"match to "<<tmp<<", needs "<<step2<<"="<<(temp=step2)<<" steps"<<endl;
+	step2+=getLast1(pos);
+	cout<<"match to n needs "<<getLast1(pos)<<" steps"<<endl;
+
+	//匹配到mlen
+	pos=m_2.len;
+	tmp=n_2.substr(0,m_2.len);
+	num_2 step1;
+	if(m_2<=tmp) {
+		step1=tmp.Cha(m_2);
+		cout<<"match to "<<tmp<<", needs "<<step1<<"="<<(temp=step1)<<" steps"<<endl;
+		step1+=getLast(pos);
+		cout<<"match to n needs "<<getLast(pos)<<" steps"<<endl;
+	}
+	else {
+		tmp=tmp+1;
+		step1=m_2.Cha(tmp);
+		cout<<"match to "<<tmp<<", needs "<<step1<<"="<<(temp=step1)<<" steps"<<endl;
+		step1+=getLast1(pos);
+		cout<<"match to n needs "<<getLast1(pos)<<" steps"<<endl;
+	}
+	if(step2<step1) return step2;
+	else return step1;
+}
 int main(){
-	int M;
-	scanf("%d %d",&N,&M);
-	printf("from %d to %d need %d step\n",M,N,f(M,N));
+	char m_str[MAXN],n_str[MAXN];
+	while(true){
+		scanf("%s %s",&n_str,&m_str);
+		n_10=n_str;m_10=m_str;
+		if(n_10.isZero()&&m_10.isZero()) break;
+		n_2=n_10;m_2=m_10;
+		m_10=m_2;n_10=n_2;
+		cout<<"m:"<<m_2<<"="<<m_10<<endl<<"n:"<<n_2<<"="<<n_10<<endl;
+		cout<<"from "<<m_10<<" to "<<n_10<<" needs "<<f()<<" steps"<<endl;
+		cout<<"=================================="<<endl;
+	}
+	//	cout<<n_10<<endl<<m_10<<endl;
+	//	##test num_2 num_10
+	//	char ss[1000];
+	//	cin>>ss;
+	//	cout<<"ss:"<<ss<<endl;
+	//	n_10=(ss);
+	//	cout<<n_10<<endl;
+	//	n_10.div2();
+	//	cout<<n_10<<endl;
+	//	n_2=n_10;
+	//	cout<<n_2<<endl;
 	return 0;
 }
