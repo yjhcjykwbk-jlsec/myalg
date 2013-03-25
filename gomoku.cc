@@ -47,7 +47,7 @@ enum ChessType{Invalid=-1,Empty=0,White=1,Black=2};
 struct Pos{
 	int x,y;
 	Pos(int a,int b):x(a),y(b){}
-	Pos():x(-1),y(01){};
+	Pos():x(-1),y(-1){};
 	bool operator <(const Pos &t){
 		if(x!=t.x) return x<t.x;
 		return y<t.y;
@@ -248,13 +248,27 @@ int main(){
 			findW(alter,q_second,w3_second);
 			if(q_second.size()>=2){
 			printf("Lose in 2 moves\n");	
-			}else if(w3_first.size()>=1){
-				Link l=w3_first.front();
-				Pos p=l.b;
-				printf("Place %s at(%d,%d) to win in 3 moves.\n",chessColor(type),p.x,p.y);
-			} else
-				printf("Cannot win in 3 moves.\n");
+			}else{
+				if(w3_first.size()>=1){
+				Pos related[Chess::xnum][Chess::ynum]; bool hastwo[Chess::xnum][Chess::ynum];
+				rep0(i,Chess::xnum)rep0(j,Chess::ynum) 
+					hastwo[i][j]=false;
+				for(list<Link>::iterator it=w3_first.begin();it!=w3_first.end();it++){
+					Link l=*it;
+					Pos p1=l.a,p2=l.b;
+//					printf("%d,%d with %d,%d\n",p1.x,p1.y,p2.x,p2.y);
+					if(related[p1.x][p1.y].isnull()) related[p1.x][p1.y]=p2;else hastwo[p1.x][p1.y]=true;
+					if(related[p2.x][p2.y].isnull()) related[p2.x][p2.y]=p1;else hastwo[p2.x][p2.y]=true;
+				}Pos min(Chess::xnum,Chess::ynum);int minx=Chess::xnum,miny=Chess::ynum;
+				rep0(i,Chess::xnum)rep0(j,Chess::ynum) 
+						if(hastwo[i][j]&&related[i][j]<min) min=related[i][j],minx=i,miny=j; 
+				if(minx!=Chess::xnum) 
+					printf("Place %s at(%d,%d) to win in 3 moves.\n",chessColor(type),minx,miny);
+				else printf("Cannot win in 3 moves.\n");
+				}
+				else printf("Cannot win in 3 moves.\n");
 			}
+		}
 	}
 	return 0;
 }
