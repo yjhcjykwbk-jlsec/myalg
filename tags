@@ -3,48 +3,57 @@
 !_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
-!_TAG_PROGRAM_VERSION	5.8	//
-Cha	fairies.cc	/^	num_2 Cha(num_2 & b){$/;"	f	struct:num_2
-MAXN	fairies.cc	11;"	d	file:
-a	fairies.cc	/^	int a[MAXN];$/;"	m	struct:num_10	file:
-a	fairies.cc	/^	int a[MAXN];$/;"	m	struct:num_2	file:
-add1	fairies.cc	/^	void add1(){$/;"	f	struct:num_10
-adjust	fairies.cc	/^	void adjust(){$/;"	f	struct:num_10
-adjust	fairies.cc	/^	}void adjust(){$/;"	f	struct:num_2
-div2	fairies.cc	/^	int div2(){$/;"	f	struct:num_10
-f	fairies.cc	/^num_10 f(){$/;"	f
-getCha	fairies.cc	/^	friend	num_2 getCha( num_2 &a, num_2 &b){$/;"	f	struct:num_2
-getLast	fairies.cc	/^int getLast(int start){$/;"	f
-getLast1	fairies.cc	/^int getLast1(int start){$/;"	f
-isZero	fairies.cc	/^	bool isZero(){return len==0||a[0]==0;}$/;"	f	struct:num_10
-len	fairies.cc	/^	int len;$/;"	m	struct:num_10	file:
-len	fairies.cc	/^	int len;$/;"	m	struct:num_2	file:
-m_10	fairies.cc	/^}m_10,n_10;$/;"	v	typeref:struct:num_10
-m_2	fairies.cc	/^}m_2,n_2;$/;"	v	typeref:struct:num_2
-main	fairies.cc	/^int main(){$/;"	f
-mul2	fairies.cc	/^	void mul2(){$/;"	f	struct:num_10
-n_10	fairies.cc	/^}m_10,n_10;$/;"	v	typeref:struct:num_10
-n_2	fairies.cc	/^}m_2,n_2;$/;"	v	typeref:struct:num_2
-num_10	fairies.cc	/^	num_10(){\/\/从十进制字符串转$/;"	f	struct:num_10
-num_10	fairies.cc	/^	num_10(char *s){\/\/从十进制字符串转$/;"	f	struct:num_10
-num_10	fairies.cc	/^	num_10(const num_2 &b){\/\/从2进制转10进制$/;"	f	struct:num_10
-num_10	fairies.cc	/^struct num_10{$/;"	s	file:
-num_2	fairies.cc	/^	num_2(){$/;"	f	struct:num_2
-num_2	fairies.cc	/^	num_2(int n){$/;"	f	struct:num_2
-num_2	fairies.cc	/^num_2::num_2(const num_10 &s)$/;"	f	class:num_2
-num_2	fairies.cc	/^struct num_2{$/;"	s	file:
-operator +	fairies.cc	/^	num_2 operator + (int b){$/;"	f	struct:num_2
-operator +=	fairies.cc	/^	void operator += (int b){$/;"	f	struct:num_2
-operator <	fairies.cc	/^	bool operator < (const num_2 &b){$/;"	f	struct:num_2
-operator <<	fairies.cc	/^	friend ostream& operator<<(ostream &os,const num_10& s){$/;"	f	struct:num_10
-operator <<	fairies.cc	/^	friend ostream& operator<<(ostream &os,const num_2& s){$/;"	f	struct:num_2
-operator <=	fairies.cc	/^	bool operator <= (const num_2 &b){$/;"	f	struct:num_2
-rep	fairies.cc	6;"	d	file:
-rep0	fairies.cc	5;"	d	file:
-reverse	fairies.cc	/^	void reverse(){$/;"	f	struct:num_10
-reverse	fairies.cc	/^	void reverse(){$/;"	f	struct:num_2
-simplify	fairies.cc	/^	void simplify(){\/\/去掉开头的0$/;"	f	struct:num_10
-simplify	fairies.cc	/^	void simplify(){\/\/去掉开头的0$/;"	f	struct:num_2
-substr	fairies.cc	/^	num_2 substr(int l,int r){$/;"	f	struct:num_2
-tep	fairies.cc	8;"	d	file:
-tep0	fairies.cc	7;"	d	file:
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Aspeed	myball.cc	/^typedef struct Pos Aspeed;\/\/加速度$/;"	t	typeref:struct:Pos	file:
+Ball	myball.cc	/^	Ball(){$/;"	f	struct:Ball
+Ball	myball.cc	/^	Ball(float x,float y){$/;"	f	struct:Ball
+Ball	myball.cc	/^struct Ball{$/;"	s	file:
+Edge	myball.cc	/^	Edge(){lp=NULL;rp=NULL;}$/;"	f	struct:Edge
+Edge	myball.cc	/^	Edge(Ball *l,Ball *r){lp=l;rp=r;}$/;"	f	struct:Edge
+Edge	myball.cc	/^struct Edge{\/\/弹簧$/;"	s	file:
+H	myball.cc	9;"	d	file:
+K	myball.cc	/^float K=0.0002,OLen=10;$/;"	v
+OLen	myball.cc	/^float K=0.0002,OLen=10;$/;"	v
+Pi	myball.cc	8;"	d	file:
+Pos	myball.cc	/^	Pos(){x=0,y=0;}$/;"	f	struct:Pos
+Pos	myball.cc	/^	Pos(float a,float b){x=a,y=b;}$/;"	f	struct:Pos
+Pos	myball.cc	/^struct Pos{$/;"	s	file:
+Speed	myball.cc	/^typedef struct Pos Speed;\/\/速度$/;"	t	typeref:struct:Pos	file:
+W	myball.cc	10;"	d	file:
+_display	myball.cc	/^void _display(void)$/;"	f
+_init	myball.cc	/^void _init (void) $/;"	f
+aspeed	myball.cc	/^	Aspeed aspeed;\/\/加速度$/;"	m	struct:Ball	file:
+balls	myball.cc	/^Ball balls[1000];Edge edges[1000];$/;"	v
+change	myball.cc	/^	void change(){$/;"	f	struct:Ball
+change	myball.cc	/^	void change(){$/;"	f	struct:Edge
+change	myball.cc	/^	void change(const Speed& s){ x+=s.x;y+=s.y; }$/;"	f	struct:Pos
+change	myball.cc	/^	void change(float dx,float dy){ x+=dx;y+=dy; }$/;"	f	struct:Pos
+drawBall	myball.cc	/^void drawBall(float x,float y,float R){$/;"	f
+drawBallsAndEdges	myball.cc	/^void drawBallsAndEdges(){$/;"	f
+drawLine	myball.cc	/^void drawLine(Ball *lp,Ball *rp)  {$/;"	f
+edges	myball.cc	/^Ball balls[1000];Edge edges[1000];$/;"	v
+getPower	myball.cc	/^float getPower(float dd){$/;"	f
+getPower1	myball.cc	/^float getPower1(float dd){$/;"	f
+influence	myball.cc	/^void influence(Ball *lp){$/;"	f
+influence	myball.cc	/^void influence(Ball *lp,Ball *rp,float (*func)(float dd)){$/;"	f
+init	myball.cc	/^	void init(){$/;"	f	struct:Pos
+init	myball.cc	/^void init(int n){$/;"	f
+lp	myball.cc	/^	Ball * lp;\/\/小的球编号$/;"	m	struct:Edge	file:
+main	myball.cc	/^int main(int argc, char** argv)$/;"	f
+n_ball	myball.cc	/^int n_edge; int n_ball;$/;"	v
+n_edge	myball.cc	/^int n_edge; int n_ball;$/;"	v
+pos	myball.cc	/^	Pos  pos;\/\/位置$/;"	m	struct:Ball	file:
+print	myball.cc	/^	void print(){$/;"	f	struct:Ball
+refresh	myball.cc	/^void refresh(){$/;"	f
+rep	myball.cc	11;"	d	file:
+rp	myball.cc	/^	Ball * rp;\/\/大的球编号$/;"	m	struct:Edge	file:
+set	myball.cc	/^	void set(Ball *l,Ball *r){lp=l;rp=r;}$/;"	f	struct:Edge
+set	myball.cc	/^	void set(float a,float b){$/;"	f	struct:Pos
+set	myball.cc	/^	void set(float x,float y){$/;"	f	struct:Ball
+size	myball.cc	/^	int size;\/\/半径$/;"	m	struct:Ball	file:
+speed	myball.cc	/^	Speed speed;\/\/速度$/;"	m	struct:Ball	file:
+speed_zuni	myball.cc	/^	void speed_zuni(){$/;"	f	struct:Pos
+tep	myball.cc	12;"	d	file:
+timerFunc	myball.cc	/^void timerFunc(int value){$/;"	f
+x	myball.cc	/^	float x,y;$/;"	m	struct:Pos	file:
+y	myball.cc	/^	float x,y;$/;"	m	struct:Pos	file:

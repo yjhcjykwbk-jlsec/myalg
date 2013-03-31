@@ -27,7 +27,7 @@ struct Pos{
 		x=0,y=0;
 	}
 	void speed_zuni(){
-		x*=0.99;y*=0.99;
+		x*=0.94;y*=0.94;
 	}
 };
 struct Ball{
@@ -67,16 +67,21 @@ float getPower(float dd){
 }
 //小球之间的排斥力
 float getPower1(float dd){
-	if(dd<0.01) return getPower1(0.01);
-	float f=0.2*pow(dd,-1.4);
+	if(dd<0.1) return getPower1(0.1);
+	float f=5*pow(dd,-1.6);
 	return f;
 }
 //计算小球受到的屏幕边缘的排斥力产生的加速度
 void influence(Ball *lp){
-	float dx1=lp->pos.x+500,dx2=W-dx1;
+	float dx1=lp->pos.x,dx2=W-dx1;
+//	float dx1=abs(lp->pos.x),dx2=abs(W-dx1);
+	if(dx1<0) dx1=0.5; else if(dx2<0) dx2=0.5;
 	float fx=pow(dx1,-1.5)-pow(dx2,-1.5);
-	float dy1=lp->pos.y+250,dy2=H-dy1;
+
+	float dy1=lp->pos.y,dy2=H-dy1;
+	if(dy1<0) dy1=0.5; else if(dy2<0) dy2=0.5;
 	float fy=pow(dy1,-1.5)-pow(dy2,-1.5);
+
 	lp->aspeed.change(fx,fy);
 }
 //计算小球之间因为互相作用力func而产生的加速度
@@ -87,22 +92,21 @@ void influence(Ball *lp,Ball *rp,float (*func)(float dd)){
 	float dd=pow(dx,2.0)+pow(dy,2.0);
 	if(dd<=0.1) dd=0.1,cos=dx>0?1:-1,sin=0;
 	else{ dd=pow(dd,0.5);cos=dx/dd; sin=dy/dd; }
+//	cout<<"dd:"<<dd<<",cos:"<<cos<<",sin:"<<sin<<endl;
 	float f=func(dd);
 	float fx=f*cos,fy=f*sin;	
 	rp->aspeed.change(fx,fy);
 	lp->aspeed.change(0-fx,0-fy);
 }
 struct Edge{//弹簧
-	int t;
 	Ball * lp;//小的球编号
 	Ball * rp;//大的球编号
-	Edge(Ball *l,Ball *r){lp=l;rp=r;t=0;}
-	Edge(){lp=NULL;rp=NULL;t=0;}
+	Edge(Ball *l,Ball *r){lp=l;rp=r;}
+	Edge(){lp=NULL;rp=NULL;}
 	void set(Ball *l,Ball *r){lp=l;rp=r;}
 	void change(){
 		influence(lp,rp,getPower);
 	}
-	void fresh(){t=0;}
 };
 
 //////////////////////////////////////////////////////////
@@ -114,51 +118,65 @@ void refresh(){
 		balls[i].aspeed.init();//初始化加速度
 	rep(i,n_edge)
 		edges[i].change();//因为弹簧作用力产生的加速度
+	rep(i,n_ball){
+		int dt=0;//步
+		if(n_ball>i+1+10) dt=(n_ball-(i+1))/10;
+		else dt=1;
+		for(int j=i+1;j<n_ball;j+=random()%(dt+1))//随机找10个点
+		influence(&balls[i],&balls[j],getPower1);//计算小球i与他们之间排斥力产生的加速度
+	}
 	rep(i,n_ball)
-		tep(j,i+1,n_ball)
-			influence(&balls[i],&balls[j],getPower1);//因为小球之间排斥力产生的加速度
-	rep(i,n_ball)
-			influence(&balls[i]);//因为屏幕边缘对小球排斥力产生的加速度
+		influence(&balls[i]);//因为屏幕边缘对小球排斥力产生的加速度
 	rep(i,n_ball)
 		balls[i].change();//由加速度，计算新的速度和位置
 }
 //初始化数据
 void init(int n){
-	int i;
-	for(i=0;i<n;i++)
+	rep(i,n)
 	{
-		int x=random()%200;
-		int y=random()%200;
+		int x=W/2+random()%200;
+		int y=H/2+random()%200;
 		balls[i].set(x,y);
-		edges[i].set(&balls[i],&balls[i+1]);
 	}
-	edges[i-1].set(&balls[i-1],&balls[0]);
-	n_ball=i;n_edge=i;	
+	rep(i,n-1){
+		int j=random()%(n-i-1)+i+1;
+		edges[i].set(balls+i,balls+j);
+	}
+	//	edges[i-1].set(&balls[i-1],&balls[0]);
+	n_ball=n;n_edge=n-1;	
+	cout<<"after init"<<endl;
 }
 ///////////////////////////////////////////////////
 //画图
-void drawline(float x1,float y1,float x2,float y2)  {
-	glClear (GL_COLOR_BUFFER_BIT);
+void drawLine(Ball *lp,Ball *rp)  {
+	float x1=lp->pos.x,y1=lp->pos.y;
+	float x2=rp->pos.x,y2=rp->pos.y;
 	glColor3f (0.0, 0.0, 0.0);
 	glBegin(GL_LINES);
 	glVertex2f(x1,y1);
 	glVertex2f(x2,y2);
+	glEnd();
 }
-void drawCircle(float x,float y,float R){
+void drawBall(float x,float y,float R){
 	int n=1000;
-	glBegin(GL_LINE_LOOP);//非常关键
-	for(int i=0; i<n; ++i)
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(x, y);
+	for(int count=0; count<=n; count++)
 	{
-		glClear (GL_COLOR_BUFFER_BIT);
-		glColor3f (0.0, 0.0, 0.0);
-		glVertex2f(x+R+R*cos(2*Pi/n*i),y+R+R*sin(2*Pi/n*i));
+		glVertex2f(x+R*cos(count*2*Pi/n), y+R*sin(count*2*Pi/n));
 	}
+	glEnd();
 }
-void drawBalls(){
+void drawBallsAndEdges(){
+	int R=3,n=300;
 	rep(i,n_ball)
 	{
 		float x=balls[i].pos.x,y=balls[i].pos.y;
-		drawCircle(x+500,y+250,4);
+		drawBall(x,y,4);
+	}
+	rep(i,n_edge)
+	{
+		drawLine(edges[i].lp,edges[i].rp);
 	}
 }
 void _display();
@@ -169,11 +187,11 @@ void _display(void)
 {
 	glClear (GL_COLOR_BUFFER_BIT);
 	glColor3f (0.0, 0.0, 0.0);
-	drawBalls();
+	drawBallsAndEdges();
 	glEnd();
 	glFlush ();
 	refresh();//刷新数据
-	glutTimerFunc(50,timerFunc,0);
+	glutTimerFunc(5,timerFunc,0);
 }
 void _init (void) 
 {
