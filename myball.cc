@@ -61,15 +61,15 @@ struct Ball{
 };
 //弹簧的力,OLen为弹簧原长
 float getPower(float dd){
-	float f=K*pow((dd-OLen),2.0)/2;
-	f=(dd>OLen?0-f:f);
-	return f;
+	float f;
+	if(abs(dd-OLen)<0.3) f=K*pow(0.3,2.0)/2;
+	else f=K*pow((dd-OLen),2.0)/2;
+	return (dd>OLen?0-f:f);
 }
 //小球之间的排斥力
 float getPower1(float dd){
-	if(dd<0.1) return getPower1(0.1);
-	float f=5*pow(dd,-1.6);
-	return f;
+	if(dd<0.3) return 5*pow(0.3,-1.6);
+	else return 5*pow(dd,-1.6);
 }
 //计算小球受到的屏幕边缘的排斥力产生的加速度
 void influence(Ball *lp){
@@ -122,7 +122,7 @@ void refresh(){
 		int dt=0;//步
 		if(n_ball>i+1+10) dt=(n_ball-(i+1))/10;
 		else dt=1;
-		for(int j=i+1;j<n_ball;j+=random()%(dt+1))//随机找10个点
+		for(int j=i+1;j<n_ball;j+=random()%dt+1)//随机找10个点
 		influence(&balls[i],&balls[j],getPower1);//计算小球i与他们之间排斥力产生的加速度
 	}
 	rep(i,n_ball)
@@ -168,7 +168,7 @@ void drawBall(float x,float y,float R){
 	glEnd();
 }
 void drawBallsAndEdges(){
-	int R=3,n=300;
+	int R=5,n=300;
 	rep(i,n_ball)
 	{
 		float x=balls[i].pos.x,y=balls[i].pos.y;
@@ -191,7 +191,7 @@ void _display(void)
 	glEnd();
 	glFlush ();
 	refresh();//刷新数据
-	glutTimerFunc(5,timerFunc,0);
+	glutTimerFunc(20,timerFunc,0);
 }
 void _init (void) 
 {
