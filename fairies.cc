@@ -1,6 +1,8 @@
 #include <iostream>
+#include <stdio.h>
 #include <map>
-
+#include <string.h>
+#include <assert.h>
 using namespace std;
 #define rep0(i,n) for(int i=0;i<n;i++)  //[0,n)
 #define rep(i,m,n) for(int i=m;i<n;i++) //[m,n)
