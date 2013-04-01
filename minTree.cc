@@ -45,7 +45,7 @@ void init(){
 			int t,len;
 			cin>>t>>len;
 			Edge edge(i,t,len);
-			if(t>i) edges[i].push_back(edge);
+			edges[i].push_back(edge);
 		}
 	}
 	rep(i,n_vertex)
@@ -53,31 +53,58 @@ void init(){
 		cout<<edges[i][j]<<endl;
 	cout<<"after init"<<endl;
 }
+//////////////////////////////
 void krustal(){
 	//将edges[n]->mintree
+	Bcha bcha(n_vertex);
 	priority_queue<Edge> vqueue;
+	vector<Edge> mintree;
+
 	rep(i,n_vertex){
 		rep(j,edges[i].size())
-			vqueue.push(edges[i][j]);
-		edges[i].clear();
+			if(edges[i][j].l<edges[i][j].r) 
+				vqueue.push(edges[i][j]);
 	}
-	Bcha bcha(n_vertex);
 	while(!vqueue.empty()){
 		Edge s=vqueue.top();vqueue.pop();
 		int a=s.l,b=s.r;
 		if(bcha.getF(a)!=bcha.getF(b)){
-		//	cout<<a<<"("<<bcha.getF(a)<<")"<<b<<"("<<bcha.getF(b)<<")#"<<s.len<<endl;
-			edges[a].push_back(s);		
+			//	cout<<a<<"("<<bcha.getF(a)<<")"<<b<<"("<<bcha.getF(b)<<")#"<<s.len<<endl;
 			bcha.setF(a,b);	
+			mintree.push_back(s);		
 		}
 	}
+
+	rep(i,mintree.size()) cout<<mintree[i]<<endl;
 }
+/////////////////////////////////
+//不断扩充现有子树，增加新点
+void prim(){
+	bool visit[MAXN];
+	priority_queue<Edge> vqueue;
+	vector<Edge> mintree;
+
+	rep(i,n_vertex) visit[i]=false;
+	int v=0; visit[v]=true;	
+	rep(n_v,n_vertex-1){//访问刚加入子树的点v
+		rep(i,edges[v].size())
+			if(!visit[edges[v][i].r])
+				vqueue.push(edges[v][i]);//添加从v指出到新点的边
+		while(!vqueue.empty()){//找到下一个从子树指出到新点的最短边
+			Edge e=vqueue.top();vqueue.pop();
+			if(!visit[e.r]) 
+			{mintree.push_back(e);v=e.r;break;}//加入该边e和新点r
+		}
+	}
+	rep(i,mintree.size()) cout<<mintree[i]<<endl;
+}
+
 int main(){
 	init();
+	cout<<"krustal:"<<endl;
 	krustal();
-	rep(i,n_vertex)
-		rep(j,edges[i].size())
-		cout<<edges[i][j]<<endl;
+	cout<<"prim:"<<endl;
+	prim();
 	return 0;
 }
 
