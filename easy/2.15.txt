@@ -1,0 +1,33 @@
+(1)
+A算法最坏的情况下： O(i*n),其中FindMax时间代价为O（n）
+B算法最坏的情况下为： O（nLgn）,其中排序用快速排序或者归并排序
+(2)
+伪码：
+int i,a[n];
+def func(a,l,r,i): 
+	//找到a[l]-a[r]区间前i大的元素,划分到左区间。其余划分到右区间。
+
+	while(true)
+		s= random(l,r) //l-r 中任意一个下标
+		lp=l+1,rp=r    //左右游标
+		swap a[s],a[l] 
+
+		while(lp<=rp)//把大于等于a[l]的元素交换到前面来，组成左区间
+			for lp <- l+1~n  
+				if(a[lp]<a[l]) break	
+			for rp <- r~l  
+				if(a[rp]>=a[l]) break	
+			if(lp<rp) swap a[lp],a[rp]
+		swap a[rp],a[l]
+
+		//l-r 被划分成l~rp rp+1~r 左右两个区间	
+		if(rp-l+1>i) r=rp-1//在左区间继续划分出前i个元素
+		else if(rp-l+1<i) 
+			l=rp+1,i=i-(rp-l+1);//在右区间继续划分出前(i-左区间元素个数)个元素
+		else break;//左区间刚好对应前i个元素（l~rp),停止划分
+
+func(a,0,n-1,i)
+for k=0~i-1 print a[k] //前i个最大的元素
+	
+	
+	
