@@ -1,4 +1,4 @@
-/* @author: xuchang09@otcaix.iscas.ac.cn/
+/* @author: xuchang09@otcaix.iscas.ac.cn */
 import java.io.*;
 import java.util.*;
 public class Main
@@ -80,7 +80,7 @@ public class Main
         {
           occ[j]=i;
           return true;
-         }
+				}
       }
     }
    return false;
