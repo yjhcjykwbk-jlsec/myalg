@@ -21,9 +21,9 @@ public class Clone1  implements Cloneable{  //这个空接口声明不能少，�
 			System.out.println("........................");
 			c2 = (Clone1)c1.clone();
 			System.out.println(c1==c2);
-			System.out.println(c1.s1==c2.s1);
+			System.out.println(c1.s1==c2.s1);//引用类型的成员变量s1没有得到深拷贝。
 			c1.s1="anotherstr";
-			System.out.println(c2.s1);//引用类型的成员变量s1没有得到深拷贝。
+			System.out.println(c2.s1);
 			c1.a1=3;
 			System.out.println(c1.a1==c2.a1);//数据类型的成员变量a1得到了深拷贝。
 		} catch (CloneNotSupportedException e) {
