@@ -29,13 +29,13 @@ bool spfa(){
 	d[S]=0;pre[S]=-1;
 	while(!visit.empty()){
 		int v=visit.front();visit.pop();inqueue[v]=0;
-		for(int _i=0;_i<edges[v].size();_i++){
+		for(int _i=0;_i<edges[v].size();_i++){//访问节点v
 			int i=edges[v][_i];
 			if(dst[v][i]<FAR&&cap[v][i]>0) {//v->i可达 而且该边容量未满
 				if(d[i]>dst[v][i]+d[v]){
 					d[i]=dst[v][i]+d[v];
 					pre[i]=v;
-					if(inqueue[i]==0)
+					if(inqueue[i]==0)//找到新的松弛点
 						visit.push(i);inqueue[i]=1;
 				}
 			}

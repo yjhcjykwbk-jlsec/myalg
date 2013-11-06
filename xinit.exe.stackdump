@@ -1,0 +1,6 @@
+Exception: STATUS_ACCESS_VIOLATION at eip=00000000
+eax=0028A82C ebx=0028CE64 ecx=74C42E09 edx=00000000 esi=00000004 edi=00000000
+ebp=00000013 esp=0028A7EC program=C:\cygwin\bin\xinit.exe, pid 7724, thread main
+cs=0023 ds=002B es=002B fs=0053 gs=002B ss=002B
+Stack trace:
+Frame     Function  Args
