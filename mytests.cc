@@ -111,23 +111,60 @@ void test5(){
 /*
  * test stl map and list
  */
+typedef list<int>::iterator It;
+void display(list<int>& lst){
+	for(It it=lst.begin();it!=lst.end();it++){
+		cout<<*it<<" ";
+	}cout<<endl;
+}
 void test6(){
 	cout<<"test 6 ####"<<endl;
 	map<int,int> s;
 	s.erase(2);
 	{
 		list<int> l={1,2,3,4};
-		typedef list<int>::iterator It;
-		It it=l.begin();it++;it=++l.begin();
-		cout<<*it<<endl;
+		It it=l.begin(),tmp;it++;it=++l.begin();
+		cout<<*it<<endl;//2
 		//@ERROR: l.begin()+n 
 		//for list iterator don't support +/- n operation
-		cout<<*(--it)<<endl;	
-		cout<<*(++it)<<endl;	
+		cout<<*(--it)<<endl;//1	
+		cout<<*(++it)<<endl;//2
 		l.erase(++l.begin());
-		cout<<*it<<endl;	
+		cout<<*it<<endl;//2
 		l.clear();
+		cout<<*it<<endl;//2
+
+		it=l.begin();
+		l.insert(it,1);
+		cout<<"after insert 1:";
+		cout<<*it<<endl;//当前ｉｔ还指向ｉｎｓｅｒｔ之前的l.begin,一个未初始化的ｎｏｄｅ，即xxxx未知数
+		//ｉｔ亲手在自己背后插入一个值，又亲手删掉它,并ｉｔ始终指向原来的值
+		tmp=it;
+		cout<<*(++it)<<endl;
+		cout<<*(++tmp)<<endl;
+
+
+		it=l.begin();
 		cout<<*it<<endl;
+		l.insert(++(tmp=it),2);
+		cout<<"after insert 2:";
+		display(l);
+		cout<<*(l.end())<<":"<<*(--l.end())<<endl;
+		cout<<"after erase 1:";
+		l.erase((tmp=it)++);//in fact, this equals l.erase(it), ++ not work
+		display(l);
+		// it=l.erase((tmp=it)++);//ｅｒａｓｅ后返回下一个节点，此处是l.end()
+		// cout<<*it<<endl;//段错误
+
+		cout<<"test insert begin/end"<<endl;
+		l.clear();
+		l.insert(l.begin(),1);
+		display(l);	
+		l.clear();
+		l.insert(l.end(),1);
+		display(l);	
+		// l.erase(it);
+
 
 		list<int> r={1,2,3,4};
 		it=r.begin();
@@ -247,11 +284,11 @@ int main(){
 	// test2();
 	// test3();
 	// test4();
-	test5();
+	// test5();
 	test6();
 	// test7();
 	// test8();
 	// test9();//s1 s2 s1 s2
-	test10();
+	// test10();
 	return 0;
 }
