@@ -213,140 +213,167 @@ void test7(){
 		bool operator ()(const int &a,const int &b){//const pair<cv::Rect,int> &l,const pair<cv::Rect,int> &r){
 			return a<b;
 		}
-	}cmp;
-	vector<int> a={3,4,2,1,5,0};
-	std::sort(a.begin(),a.end(),cmp);
-	rep(i,a.size()) cout<<a[i]<<" ";cout<<endl;
-}
-/*
- * test fstream fopen fread fwrite close
- */
-void test8(){
-	std::fstream f("tmp");
-	// f<<"hello world"<<endl;
-	
-	string s;
-	f>>s;
-	cout<<s<<endl;//'hello'
-
-	//@ERROR: here may invoke a memory corruption 
-	//(string s)'s memory can be overflowed by f.getline
-	char *tt=(char *)s.c_str();//const char * to char*
-	f.getline(tt,100,'\n');
-
-	cout<<tt<<endl;//' world'
-	cout<<s<<endl;//' worl', string's size keep 5
-
-	fstream g("tmp");
-	char buf[10];
-	g.getline(buf,10,'\n');
-	cout<<buf<<endl;//'hello wor'
-	g.getline(buf,10,'\n');
-	cout<<buf<<endl;//''
-}
-/*
- *test procession
- */
-void test9(){
-	FILE *fp=fopen("test9","wr");
-	if(fp==NULL) return;
-	char *s1="hello world",*s2="hello londan";
-	fprintf(fp,"%s\n",s1);
-
-	int c=-9;
-	c=fork();
-	if(c==-1) return;
-	else if(c==0) cout<<"i am child"<<endl;
-	else cout<<"i am father and just forked a son:"<<c<<endl;
-	// cout<<c<<":"<<" add s2 to outstream"<<endl;
-	// fprintf(fp,"%s\n",s2);
-
-	//father code
-	if(c!=0) {
-		int status=0;
-		rep(i,1000000);
-		cout<<"wait for son to exit"<<endl;
-		int sid=wait(&status);
-		cout<<"my son "<<sid<<" exited some time ago"<<endl;
+		}cmp;
+		vector<int> a={3,4,2,1,5,0};
+		std::sort(a.begin(),a.end(),cmp);
+		rep(i,a.size()) cout<<a[i]<<" ";cout<<endl;
 	}
-	//son code
-	else{
-		cout<<"son exit.."<<endl;
-		exit(0);
-		cout<<"son still alive?"<<endl;
-	}
-	fclose(fp);
-	return;
-}
+	/*
+	 * test fstream fopen fread fwrite close
+	 */
+	void test8(){
+		std::fstream f("tmp");
+		// f<<"hello world"<<endl;
 
-/**
- * test string
- */
-void test10(){
-	string s="helloworld";
-	char buf[100];
-	strcpy(buf,s.c_str());
-	cout<<buf<<endl;
-}
+		string s;
+		f>>s;
+		cout<<s<<endl;//'hello'
 
+		//@ERROR: here may invoke a memory corruption 
+		//(string s)'s memory can be overflowed by f.getline
+		char *tt=(char *)s.c_str();//const char * to char*
+		f.getline(tt,100,'\n');
 
-/*
- * test math
- */
-int kpow(ll n,ll m){
-	ll ans=1;
-	n%=MOD;
-	while(m>0){
-		if(m&1) ans=(ans*n)%MOD;
-		n=(n*n)%MOD;
-		m>>=1;
+		cout<<tt<<endl;//' world'
+		cout<<s<<endl;//' worl', string's size keep 5
+
+		fstream g("tmp");
+		char buf[10];
+		g.getline(buf,10,'\n');
+		cout<<buf<<endl;//'hello wor'
+		g.getline(buf,10,'\n');
+		cout<<buf<<endl;//''
 	}
-	return ans;
-}
-int _ca(ll n,ll m){
-	if(n<m) return 0;
-	ll ans=1;
-	for(int i=1;i<=m;i++){
-		ans=ans*((n+i-m)%MOD*kpow(i,MOD-2)%MOD)%MOD;
+	/*
+	 *test procession
+	 */
+	void test9(){
+		FILE *fp=fopen("test9","wr");
+		if(fp==NULL) return;
+		char *s1="hello world",*s2="hello londan";
+		fprintf(fp,"%s\n",s1);
+
+		int c=-9;
+		c=fork();
+		if(c==-1) return;
+		else if(c==0) cout<<"i am child"<<endl;
+		else cout<<"i am father and just forked a son:"<<c<<endl;
+		// cout<<c<<":"<<" add s2 to outstream"<<endl;
+		// fprintf(fp,"%s\n",s2);
+
+		//father code
+		if(c!=0) {
+			int status=0;
+			rep(i,1000000);
+			cout<<"wait for son to exit"<<endl;
+			int sid=wait(&status);
+			cout<<"my son "<<sid<<" exited some time ago"<<endl;
+		}
+		//son code
+		else{
+			cout<<"son exit.."<<endl;
+			exit(0);
+			cout<<"son still alive?"<<endl;
+		}
+		fclose(fp);
+		return;
 	}
-	return ans;
-}
-// n=m=E(p^i*ai)
-// C(n,m)%MOD=II(C(ai,bi))%MOD
-int ca(ll n,ll m){
-	if(n<m) return 0;
-	if(m==0) return 1;
-	return _ca(n%MOD,m%MOD)*ca(n/MOD,m/MOD)%MOD;
-}
-void test11(){
-	ll x=pow(10,18);
-	cout<<"pow 10,18:";
-	cout<<x<<endl;
-	/////test C(n,m)%MOD
-	//test Lucas Principle on http://blog.csdn.net/acdreamers/article/details/8037918
-	cout<<"ca(10,3):"<<ca(10,3)<<endl;	
-	cout<<"ca(10,0):"<<ca(10,0)<<endl;	
-	cout<<"ca(11,1):"<<ca(11,1)<<endl;	
-	cout<<"ca(1,1):"<<ca(1,1)<<endl;	
-	cout<<"ca(111111111111,1):"<<ca(111111111111,1)<<endl;	
-	cout<<"ca(111111111111,0):"<<ca(111111111111,0)<<endl;	
-	cout<<"ca(111111,111111):"<<ca(111111,111111)<<endl;	
-	cout<<"ca(111111,111110):"<<ca(111111,111110)<<endl;	
-	cout<<"ca(111111,111109):"<<ca(111111,111109)<<endl;	
-	cout<<"assert =:"<< (ll)111111*111110/2%MOD<<endl;
-	cout<<"ca(111111,111112):"<<ca(111111,111112)<<endl;	
-}
-int main(){
-	// printf("hello world:%d\n",hello());
-	// test2();
-	// test3();
-	// test4();
-	// test5();
-	// test6();
-	// test7();
-	// test8();
-	// test9();//s1 s2 s1 s2
-	// test10();
-	test11();
-	return 0;
-}
+
+	/**
+	 * test string
+	 */
+	void test10(){
+		string s="helloworld";
+		char buf[100];
+		strcpy(buf,s.c_str());
+		cout<<buf<<endl;
+	}
+
+	///////////////////////////////////////////
+	/*
+	 * test math
+	 */
+	void initCa(vector<vector<int> >&a){
+		if(a.size()<2) return ;
+		int N=a.size();
+		a[1][1]=a[1][0]=1;
+		for(int i=2;i<N;i++) a[i][0]=1;
+		for(int i=2;i<N;i++){
+			for(int j=1;j<=i;j++){
+				a[i][j]=a[i-1][j-1]+a[i-1][j];
+			}
+		}
+	}
+	int simca(int n,int m){
+		static vector<vector<int> >s(1000,vector<int>(1000,0));
+		static bool inited=false;
+		int N=1000;
+		if(!inited){
+			initCa(s);
+			inited=true;
+		}
+		if(n<m) return 0;
+		assert(n>0&&n<N);
+		return s[n][m];
+	}
+
+	int kpow(ll n,ll m){
+		ll ans=1;
+		n%=MOD;
+		while(m>0){
+			if(m&1) ans=(ans*n)%MOD;
+			n=(n*n)%MOD;
+			m>>=1;
+		}
+		return ans;
+	}
+	int _ca(ll n,ll m){
+		if(n<m) return 0;
+		ll ans=1;
+		for(int i=1;i<=m;i++){
+			ans=ans*((n+i-m)%MOD*kpow(i,MOD-2)%MOD)%MOD;
+		}
+		return ans;
+	}
+	// n=m=E(p^i*ai)
+	// C(n,m)%MOD=II(C(ai,bi))%MOD
+	int ca(ll n,ll m){
+		if(n<m) return 0;
+		if(m==0) return 1;
+		return _ca(n%MOD,m%MOD)*ca(n/MOD,m/MOD)%MOD;
+	}
+	void test11(){
+		ll x=pow(10,18);
+		cout<<"pow 10,18:";
+		cout<<x<<endl;
+		/////test C(n,m)%MOD
+		//test Lucas Principle on http://blog.csdn.net/acdreamers/article/details/8037918
+		cout<<"ca(10,3):"<<ca(10,3)<<endl;	
+		cout<<"ca(10,0):"<<ca(10,0)<<endl;	
+		cout<<"ca(11,1):"<<ca(11,1)<<endl;	
+		cout<<"ca(1,1):"<<ca(1,1)<<endl;	
+		cout<<"ca(111111111111,1):"<<ca(111111111111,1)<<endl;	
+		cout<<"ca(111111111111,0):"<<ca(111111111111,0)<<endl;	
+		cout<<"ca(111111,111111):"<<ca(111111,111111)<<endl;	
+		cout<<"ca(111111,111110):"<<ca(111111,111110)<<endl;	
+		cout<<"ca(111111,111109):"<<ca(111111,111109)<<endl;	
+		cout<<"assert =:"<< (ll)111111*111110/2%MOD<<endl;
+		cout<<"ca(111111,111112):"<<ca(111111,111112)<<endl;	
+		cout<<"simca(111,112):"<<simca(111,112)<<endl;	
+		cout<<"simca(111,109):"<<simca(111,109)<<endl;	
+		cout<<"simca(111,110):"<<simca(111,110)<<endl;	
+	}
+	int main(){
+		// printf("hello world:%d\n",hello());
+		// test2();
+		// test3();
+		// test4();
+		// test5();
+		// test6();
+		// test7();
+		// test8();
+		// test9();//s1 s2 s1 s2
+		// test10();
+		test11();
+		return 0;
+	}
