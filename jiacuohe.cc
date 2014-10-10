@@ -18,13 +18,15 @@ ll dp(ll x, int K){
 	int a[18];int len=dump(x,a);
 
 	int minN=0-(len/2)*9,maxN=(len+1)/2*9;//0909.. 9090..
+	if(K<minN||K>maxN) return 0;
 	int delta=0-minN,n=maxN-minN+1;
-	//p[i][j][k] : delta+ (+/-)xi .... -x1 + x0 = k, xi = j
+
+	////p[i][j][k] : delta+ (+/-)xi .... -x1 + x0 = k, xi = j
 	vector<vector<vector<Pair> > > p(len,vector<vector<Pair> >(10,
 				vector<Pair>(n,Pair(0,0))));
 
 	//init
-	for(int j=0;j<10;j++) p[0][j][j+delta]=Pair(1,j); //i=0. j=x0, x0+delta=k
+	for(int j=0;j<10;j++) p[0][j][j+delta]=Pair(1,j); ////i=0. j=x0, x0+delta=k
 	for(int i=0;i<len-1;i++){
 		vector<Pair> cnt(n,Pair(0,0));
 		for(int j=0;j<10;j++){
@@ -37,8 +39,7 @@ ll dp(ll x, int K){
 		// [i][k] => [i+1][j][k+(+/-)j]
 		for(int j=0;j<10;j++){
 			int fh=pow(-1,i+1);
-			ll d=(ll)(pow(10,i+1)*j)%MOD;
-			cout<<d<<endl;
+			ll d=(ll)pow(10,i+1)%MOD*j%MOD;//@error:pow(10,i+1)*j can overflow
 			for(int k=0;k<n;k++){
 				if(k+fh*j<0||k+fh*j>=n) continue;
 				Pair &s=p[i+1][j][k+fh*j];
@@ -59,9 +60,10 @@ ll dp(ll x, int K){
 		int fh=pow(-1,i); 
 		if(i==0) j=0;
 		else j=1;
-		//if(fh==1)  (k-delta)=K; else  -(k-delta)=K
+		//// if(fh==1)  (k-delta)=K; else  -(k-delta)=K
 		int k=fh*K+delta;
-		assert(k>=0&&k<n);
+		if(!(k>=0&&k<n)) continue;
+		// assert(k>=0&&k<n);//@error: logic error, here k can be out of [0,n)
 		for(;j<10;j++){
 			//b[i]=j;
 			num=(num+p[i][j][k].second)%MOD;
@@ -77,21 +79,31 @@ ll dp(ll x, int K){
 		if(i==len-1) j=1;
 		else j=0;
 		int k=(K-lst)*fh+delta;
-		assert(k>=0&&k<n);
+		// assert(k>=0&&k<n);//@error: logic error, here k can be out of [0,n)
+		if(!(k>=0&&k<n)) ;
+		else
 		for(;j<a[i];j++){
-			// lst+fh*(k-delta)=K, k=(K-lst)/fh+delta
+			//// lst+fh*(k-delta)=K, k=(K-lst)/fh+delta
 			Pair &q=p[i][j][k];
 			ll d=(q.second+s*q.first%MOD)%MOD;
 			num=(num+d)%MOD;
 		}
+
 		lst+=pow(-1,i)*fh*a[i];
-		// s+=pow(10,i)*a[i];@error: here will overflow!!!!
-		s=(s+(ll)pow(10,i)*a[i])%MOD;
+		// s+=pow(10,i)*a[i]; //@error: here will overflow!!!!
+		s=(s+(ll)pow(10,i)*a[i]%MOD)%MOD;//@attention: (ll) has higher priority than *
+		//@attention: pow(10,i)*a[i] will not overflow
 	}
 	return num;
 }
 int main(){
 	ll l,r;int k;
+	////debug
+	// for(r=999999;r<999999999;r+=10000){
+		// for(k=1;k<100;k++){
+			// cout<<dp(r,k)<<endl;
+		// }
+	// }
 	cin>>l>>r>>k;
 	ll x1=dp(l,k);
 	ll x2=dp(r,k);
@@ -99,7 +111,8 @@ int main(){
 	int b[18];int len=dump(r,b);
 	int fh=pow(-1,len-1);int kk=0;
 	for(int i=len-1;i>=0;i--) kk+=fh*pow(-1,i)*b[i];
-	if(kk==k) cnt++;
-	cout<<(MOD+cnt)%MOD<<endl;
+	// if(kk==k) cnt++;//@error: logic error: cnt++ should be cnt+=r
+	if(kk==k) cnt=(cnt+r%MOD)%MOD;
+	cout<<(cnt+MOD)%MOD<<endl;
 	return 0;
 }
