@@ -10,6 +10,7 @@
 #include <iostream>
 using namespace std;
 #define rep(i,n) for(int i=0;i<n;i++)
+typedef long long int ll;
 /*
  *test class override
  */
@@ -75,6 +76,14 @@ void test3(){
 	for(int i=0;i<(int)s.size()-1;i++){
 		s[i]=0;
 	}
+	//test overflow with ll
+	cout<<"test overflow with ll"<<endl;
+	cout<<"(ll)1999999999*1999999999:"<<endl;
+	int x=1999999999;
+	//(type)a*b,then a first be cast to type(a), then return type(a)*b
+	//(type)(a*b),then a first * b, then return type(a*b)
+	//(type) operator has a higher priority than (*,/,+,-)
+	cout<<(ll)x*x<<":"<<x*x<<":"<<(ll)(x*x)<<endl;//3999999996000000001:-1356539903
 }
 /*
  * test stl vector and xxx_bound
@@ -279,16 +288,25 @@ void test10(){
 	cout<<buf<<endl;
 }
 
+/*
+ * test math
+ */
+void test11(){
+	ll x=pow(10,18);
+	cout<<"pow 10,18:";
+	cout<<x<<endl;
+}
 int main(){
 	// printf("hello world:%d\n",hello());
 	// test2();
-	// test3();
+	test3();
 	// test4();
 	// test5();
-	test6();
+	// test6();
 	// test7();
 	// test8();
 	// test9();//s1 s2 s1 s2
 	// test10();
+	// test11();
 	return 0;
 }
