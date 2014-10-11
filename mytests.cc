@@ -1,13 +1,20 @@
-#include  "opencv2/opencv.hpp"
-#include  "opencv2/objdetect.hpp"
-#include  "opencv2/highgui.hpp"
-#include  "opencv2/imgproc.hpp"
-#include "opencv2/test.h"
-#include <stdio.h>
-#include <unistd.h>
-#include "sys/wait.h"
+// #include  "opencv2/opencv.hpp"
+// #include  "opencv2/objdetect.hpp"
+// #include  "opencv2/highgui.hpp"
+// #include  "opencv2/imgproc.hpp"
+// #include "opencv2/test.h"
 #include <fstream>
 #include <iostream>
+#include <stdio.h>
+#include <math.h>
+#include <assert.h>
+#include <algorithm>
+#include <string.h>
+#include <list>
+#include <vector>
+#include <map>
+#include <unistd.h>
+#include "sys/wait.h"
 using namespace std;
 #define rep(i,n) for(int i=0;i<n;i++)
 #define MOD 1000000007
@@ -84,7 +91,8 @@ void test3(){
 	//(type)a*b,then a first be cast to type(a), then return type(a)*b
 	//(type)(a*b),then a first * b, then return type(a*b)
 	//(type) operator has a higher priority than (*,/,+,-)
-	cout<<(ll)x*x<<":"<<x*x<<":"<<(ll)(x*x)<<endl;//3999999996000000001:-1356539903
+	ll st=x*x;
+	cout<<(ll)x*x<<":"<<x*x<<":"<<(ll)(x*x)<<":"<<st<<endl;//3999999996000000001:-1356539903
 }
 /*
  * test stl vector and xxx_bound
@@ -366,7 +374,7 @@ void test7(){
 	int main(){
 		// printf("hello world:%d\n",hello());
 		// test2();
-		// test3();
+		test3();
 		// test4();
 		// test5();
 		// test6();
