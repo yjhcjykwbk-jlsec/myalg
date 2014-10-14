@@ -408,9 +408,11 @@ void test7(){
 	 * test stack
 	 */
 	void test12(){
+		cout<<"test stack without exception?"<<endl;
 		stack<int> a;
 		a.pop();
 		a.pop();
+		cout<<a.top()<<endl;//this would invoke a segmentation fault
 	}
 
 	int main(){
