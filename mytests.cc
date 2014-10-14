@@ -108,6 +108,19 @@ void test4(){
 	cout<<"upper bound bigger than 4:"<<*it<<endl;
 	it=lower_bound(s.begin(),s.end(),4,less<int>());
 	cout<<"lower bound smaller than 4:"<<*it<<endl;
+	vector<int> t={1,2,4,5};
+	it=lower_bound(t.begin(),t.end(),3,less<int>());
+	cout<<"lower bound smaller than 3:"<<*it<<endl;
+	it=lower_bound(t.begin(),t.end(),4,less<int>());
+	cout<<"lower bound smaller than 4:"<<*it<<endl;
+	it=lower_bound(t.begin(),t.end(),14,less<int>());
+	cout<<"lower bound smaller than 14:"<<*it<<":"<<(it==t.end())<<endl;
+	it=upper_bound(t.begin(),t.end(),3,less<int>());
+	cout<<"upper bound bigger than 3:"<<*it<<endl;
+	it=upper_bound(t.begin(),t.end(),4,less<int>());
+	cout<<"upper bound bigger than 4:"<<*it<<endl;
+	it=upper_bound(t.begin(),t.end(),14,less<int>());
+	cout<<"upper bound bigger than 14:"<<*it<<":"<<(it==t.end())<<endl;
 }
 /*
  *test bit algorithm
@@ -374,14 +387,14 @@ void test7(){
 	int main(){
 		// printf("hello world:%d\n",hello());
 		// test2();
-		test3();
-		// test4();
+		// test3();
+		test4();
 		// test5();
 		// test6();
 		// test7();
 		// test8();
 		// test9();//s1 s2 s1 s2
 		// test10();
-		test11();
+		// test11();
 		return 0;
 	}
