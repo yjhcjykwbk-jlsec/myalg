@@ -12,6 +12,7 @@
 #include <string.h>
 #include <list>
 #include <vector>
+#include <stack>
 #include <map>
 #include <unistd.h>
 #include "sys/wait.h"
@@ -97,6 +98,12 @@ void test3(){
 /*
  * test stl vector and xxx_bound
  */
+struct Cmp1{
+	bool operator() (int a, int b){ return a<b; }
+}cmp1;
+struct Cmp2{
+	bool operator() (int a, int b){ return a<=b; }
+}cmp2;
 void test4(){
 	cout<<"test 4 ####"<<endl;
 	vector<int> s={5,4,3,2,1};
@@ -104,23 +111,36 @@ void test4(){
 	cout<<"lower bound bigger than 7:"<<*it<<endl;
 	it=lower_bound(s.begin(),s.end(),4,greater<int>());
 	cout<<"lower bound bigger than 4:"<<*it<<endl;
-	it=upper_bound(s.begin(),s.end(),4,greater<int>());
+	it=upper_bound(s.begin(),s.end(),4,greater<int>());// 
 	cout<<"upper bound bigger than 4:"<<*it<<endl;
-	it=lower_bound(s.begin(),s.end(),4,less<int>());
-	cout<<"lower bound smaller than 4:"<<*it<<endl;
+	it=lower_bound(s.begin(),s.end(),4,less<int>());// ?
+	cout<<"lower bound smaller_or_eq than 4:"<<*it<<endl;
 	vector<int> t={1,2,4,5};
-	it=lower_bound(t.begin(),t.end(),3,less<int>());
-	cout<<"lower bound smaller than 3:"<<*it<<endl;
-	it=lower_bound(t.begin(),t.end(),4,less<int>());
-	cout<<"lower bound smaller than 4:"<<*it<<endl;
-	it=lower_bound(t.begin(),t.end(),14,less<int>());
-	cout<<"lower bound smaller than 14:"<<*it<<":"<<(it==t.end())<<endl;
-	it=upper_bound(t.begin(),t.end(),3,less<int>());
+	it=lower_bound(t.begin(),t.end(),3,less<int>());// 4
+	cout<<"lower bound smaller_or_eq than 3:"<<*it<<endl;
+	it=lower_bound(t.begin(),t.end(),4,less<int>());// 4
+	cout<<"lower bound smaller_or_eq than 4:"<<*it<<endl;
+	it=lower_bound(t.begin(),t.end(),14,less<int>());// 0 (the end)
+	cout<<"lower bound smaller_or_eq than 14:"<<*it<<":"<<(it==t.end())<<endl;
+	it=upper_bound(t.begin(),t.end(),3,less<int>());// 4
 	cout<<"upper bound bigger than 3:"<<*it<<endl;
-	it=upper_bound(t.begin(),t.end(),4,less<int>());
+	it=upper_bound(t.begin(),t.end(),4,less<int>());// 5
 	cout<<"upper bound bigger than 4:"<<*it<<endl;
-	it=upper_bound(t.begin(),t.end(),14,less<int>());
+	it=upper_bound(t.begin(),t.end(),14,less<int>());// 0 (the end)
 	cout<<"upper bound bigger than 14:"<<*it<<":"<<(it==t.end())<<endl;
+	
+	cout<<"lower_bound(..,x) return the first y that meet cmp(y,x)==false, which means y!<x "<<endl;
+	cout<<"upper_bound(..,x) return the first y that meet cmp(x,y)==true, which means x<y, or y>x"<<endl;
+	cout<<"test cmp1,cmp2:"<<endl;
+	it=lower_bound(t.begin(),t.end(),4,cmp1);
+	cout<<"lower bound smaller_or_eq than 4:"<<*it<<endl;// 4
+	it=lower_bound(t.begin(),t.end(),4,cmp2);
+	cout<<"lower bound smaller_or_eq than 4:"<<*it<<endl;// 5
+	it=upper_bound(t.begin(),t.end(),4,cmp1);
+	cout<<"upper bound bigger than 4:"<<*it<<endl;// 4
+	it=upper_bound(t.begin(),t.end(),4,cmp2);
+	cout<<"upper bound bigger than 4:"<<*it<<endl;// 5
+
 }
 /*
  *test bit algorithm
@@ -384,6 +404,15 @@ void test7(){
 		cout<<"simca(111,109):"<<simca(111,109)<<endl;	
 		cout<<"simca(111,110):"<<simca(111,110)<<endl;	
 	}
+	/*
+	 * test stack
+	 */
+	void test12(){
+		stack<int> a;
+		a.pop();
+		a.pop();
+	}
+
 	int main(){
 		// printf("hello world:%d\n",hello());
 		// test2();
@@ -396,5 +425,6 @@ void test7(){
 		// test9();//s1 s2 s1 s2
 		// test10();
 		// test11();
+		test12();
 		return 0;
 	}
