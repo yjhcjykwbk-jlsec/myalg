@@ -1,3 +1,6 @@
+/*
+ * 大数 bit 运算 + 动规
+ */
 #include <iostream>
 #include <stdio.h>
 #include <map>
