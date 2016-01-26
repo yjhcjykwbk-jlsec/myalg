@@ -84,6 +84,7 @@ class OverideTest: TestBase{
 
 /**
  * test pointer and array
+ * http://www.cnblogs.com/chengxin1982/archive/2009/01/13/1374575.html
  */
 class ArrayPointerTest{
   public:
