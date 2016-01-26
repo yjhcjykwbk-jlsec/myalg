@@ -83,15 +83,46 @@ class OverideTest: TestBase{
 
 
 /**
- * test pointer
+ * test pointer and array
  */
-class PointerTest{
+class ArrayPointerTest{
   public:
-    void test2(){
-      cout<<"test 2 ####"<<endl;
-      int b[2]={1,2};
-      int *a=b;
-      cout<<a[1]<<":"<<*(a+1)<<endl;
+    // pointer 
+    // sizeof
+    void test(){
+      {
+        int b[2]={1,2};
+        int *a=b;
+        cout<<a[1]<<":"<<*(a+1)<<endl;
+      }
+      {
+        double* (*a)[3][6]; 
+        cout<<"double* (*a)[3][6]"<<endl; 
+        cout<<"sizeof(a):"; // 4 a为指针
+        cout<<sizeof(a)<<endl; // 4 a为指针
+        cout<<"sizeof(*a):"; // 72 *a为一个有3*6个指针元素的数组
+        cout<<sizeof(*a)<<endl; // 72 *a为一个有3*6个指针元素的数组
+        cout<<"sizeof(**a):"; // 24 **a为数组一维的6个指针
+        cout<<sizeof(**a)<<endl; // 24 **a为数组一维的6个指针
+        cout<<"sizeof(***a):"; // 4 ***a为一维的第一个指针
+        cout<<sizeof(***a)<<endl; // 4 ***a为一维的第一个指针
+        cout<<"sizeof(****a):"; // 8 ****a为一个double变量
+        cout<<sizeof(****a)<<endl; // 8 ****a为一个double变量
+      }
+      {
+        double* *a[3][6]; 
+        cout<<"double**a[3][6]"<<endl; 
+        cout<<"sizeof(a):"; // 4 a为指针
+        cout<<sizeof(a)<<endl; // 4 a为指针
+        cout<<"sizeof(*a):"; // 72 *a为一个有3*6个指针元素的数组
+        cout<<sizeof(*a)<<endl; // 72 *a为一个有3*6个指针元素的数组
+        cout<<"sizeof(**a):"; // 24 **a为数组一维的6个指针
+        cout<<sizeof(**a)<<endl; // 24 **a为数组一维的6个指针
+        cout<<"sizeof(***a):"; // 4 ***a为一维的第一个指针
+        cout<<sizeof(***a)<<endl; // 4 ***a为一维的第一个指针
+        cout<<"sizeof(****a):"; // 8 ****a为一个double变量
+        cout<<sizeof(****a)<<endl; // 8 ****a为一个double变量
+      }
     }
 };
 
@@ -215,8 +246,7 @@ class MapIteratorTest{
         cout<<*it<<" ";
       }cout<<endl;
     }
-    void test6(){
-      cout<<"test 6 ####"<<endl;
+    void test(){
       map<int,int> s;
       s.erase(2);
       {
@@ -492,6 +522,7 @@ class CmparatorTest{
 
     int main(){
       // printf("hello world:%d\n",hello());
+      Decorator<ArrayPointerTest>::test();
       Decorator<OverideTest>::test();
       Decorator<StringTest>::test();
       Decorator<MemTest>::test();
